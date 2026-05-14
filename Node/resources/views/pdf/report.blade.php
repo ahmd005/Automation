@@ -2,75 +2,106 @@
 <html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>تقرير تقدير مشروع - {{ $project->name }}</title>
+    <title>تقرير التحليل الفني المتكامل - {{ $project->name }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        body { font-family: 'Cairo', sans-serif; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f3f4f6; }
         @media print {
             .no-print { display: none; }
             body { background: white; padding: 0; }
+            .page-break { page-break-before: always; }
         }
     </style>
 </head>
-<body class="bg-gray-50 p-6">
-    <div class="max-w-4xl mx-auto bg-white shadow-xl p-8 rounded-lg border border-gray-200">
+<body class="p-4 md:p-10">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl p-8 rounded-xl border border-gray-200">
         
-        <div class="flex justify-between items-center border-b-2 border-blue-600 pb-4 mb-8">
+        <div class="flex justify-between items-center border-b-4 border-blue-600 pb-6 mb-8">
             <div>
-                <h1 class="text-2xl font-bold text-blue-900">تقرير التحليل الفني وتقدير الكلفة</h1>
-                <p class="text-sm text-gray-500">تم توليد هذا التقرير عبر نظام الشات بوت الذكي</p>
+                <h1 class="text-3xl font-bold text-blue-900">تقرير تقدير البرمجيات التحليلي</h1>
+                <p class="text-gray-500 mt-1">بناءً على معايير IFPUG و Use Case Points</p>
             </div>
-            <button onclick="window.print()" class="no-print bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                تحميل PDF / طباعة
+            <button onclick="window.print()" class="no-print bg-blue-600 text-white px-5 py-2 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition">
+                تصدير PDF / طباعة
             </button>
         </div>
 
-        <div class="grid grid-cols-2 gap-6 mb-8 bg-blue-50 p-4 rounded-md">
-            <div><span class="font-bold text-blue-800">رقم المشروع:</span> #{{ $project->id }}</div>
-            <div><span class="font-bold text-blue-800">تاريخ التقرير:</span> {{ $project->created_at->format('Y-m-d') }}</div>
+        <div class="grid grid-cols-2 gap-4 mb-8 bg-gray-50 p-4 rounded-lg border-r-4 border-blue-600">
+            <div><span class="font-bold text-blue-800">اسم المشروع:</span> {{ $project->name }}</div>
+            <div class="text-left"><span class="font-bold text-blue-800">تاريخ التحليل:</span> {{ $project->created_at->format('Y-m-d') }}</div>
         </div>
 
         <div class="mb-10">
-            <h2 class="text-lg font-bold mb-4 text-gray-700">تفاصيل المتغيرات المستخلصة (Inputs):</h2>
-            <table class="w-full text-right border-collapse">
+            <h2 class="text-xl font-bold mb-4 text-blue-700 flex items-center">
+                <span class="bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center ml-2 text-sm">1</span>
+                تحليل نقاط الوظيفة (FP Analysis)
+            </h2>
+            <table class="w-full text-right border-collapse rounded-lg overflow-hidden shadow-sm">
                 <thead>
-                    <tr class="bg-gray-100">
-                        <th class="p-3 border">المعيار (Metric)</th>
-                        <th class="p-3 border text-center">القيمة</th>
+                    <tr class="bg-blue-600 text-white">
+                        <th class="p-3 border-b">المكون التقني (Component)</th>
+                        <th class="p-3 border-b text-center">العدد المستخلص</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr><td class="p-3 border">المدخلات الخارجية (EI)</td><td class="p-3 border text-center">{{ $project->ei }}</td></tr>
-                    <tr><td class="p-3 border">المخرجات الخارجية (EO)</td><td class="p-3 border text-center">{{ $project->eo }}</td></tr>
-                    <tr><td class="p-3 border">وزن الفاعلين (UAW)</td><td class="p-3 border text-center">{{ $project->uaw }}</td></tr>
-                    <tr><td class="p-3 border">وزن حالات الاستخدام (UUCW)</td><td class="p-3 border text-center">{{ $project->uucw }}</td></tr>
+                <tbody class="text-gray-700">
+                    <tr class="hover:bg-gray-50"><td class="p-3 border-b">المدخلات الخارجية (External Inputs - EI)</td><td class="p-3 border-b text-center font-bold">{{ $project->ei }}</td></tr>
+                    <tr class="hover:bg-gray-50"><td class="p-3 border-b">المخرجات الخارجية (External Outputs - EO)</td><td class="p-3 border-b text-center font-bold">{{ $project->eo }}</td></tr>
+                    <tr class="hover:bg-gray-50"><td class="p-3 border-b">الاستعلامات الخارجية (External Inquiries - EQ)</td><td class="p-3 border-b text-center font-bold">{{ $project->eq }}</td></tr>
+                    <tr class="hover:bg-gray-50"><td class="p-3 border-b">الملفات المنطقية الداخلية (Internal Logical Files - ILF)</td><td class="p-3 border-b text-center font-bold">{{ $project->ilf }}</td></tr>
+                    <tr class="hover:bg-gray-50"><td class="p-3 border-b">ملفات الواجهة الخارجية (External Interface Files - EIF)</td><td class="p-3 border-b text-center font-bold">{{ $project->eif }}</td></tr>
+                    <tr class="bg-blue-50 font-bold text-blue-900">
+                        <td class="p-3 border-b italic">إجمالي نقاط الوظيفة النهائية (Final FP)</td>
+                        <td class="p-3 border-b text-center text-xl">{{ number_format($project->final_fp, 2) }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <div class="p-4 border-2 border-green-200 rounded-lg bg-green-50">
-                <div class="text-sm text-green-700 font-bold">نقاط الوظيفة (FP)</div>
-                <div class="text-2xl font-black">{{ number_format($project->final_fp, 2) }}</div>
+        <div class="mb-10 page-break">
+            <h2 class="text-xl font-bold mb-4 text-purple-700 flex items-center">
+                <span class="bg-purple-700 text-white rounded-full w-8 h-8 flex items-center justify-center ml-2 text-sm">2</span>
+                تحليل نقاط حالات الاستخدام (UCP Analysis)
+            </h2>
+            <table class="w-full text-right border-collapse rounded-lg overflow-hidden shadow-sm">
+                <thead>
+                    <tr class="bg-purple-600 text-white">
+                        <th class="p-3 border-b">المعيار (UCP Metric)</th>
+                        <th class="p-3 border-b text-center">الوزن / القيمة</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                    <tr class="hover:bg-gray-50"><td class="p-3 border-b">وزن الفاعلين غير المعدل (UAW)</td><td class="p-3 border-b text-center font-bold">{{ $project->uaw }}</td></tr>
+                    <tr class="hover:bg-gray-50"><td class="p-3 border-b">وزن حالات الاستخدام غير المعدل (UUCW)</td><td class="p-3 border-b text-center font-bold">{{ $project->uucw }}</td></tr>
+                    <tr class="hover:bg-gray-50"><td class="p-3 border-b">معامل التعقيد التقني (TCF)</td><td class="p-3 border-b text-center font-bold">{{ $project->tcf }}</td></tr>
+                    <tr class="hover:bg-gray-50"><td class="p-3 border-b">المعامل البيئي (EF)</td><td class="p-3 border-b text-center font-bold">{{ $project->ef }}</td></tr>
+                    <tr class="bg-purple-50 font-bold text-purple-900">
+                        <td class="p-3 border-b italic">إجمالي نقاط حالات الاستخدام النهائية (Final UCP)</td>
+                        <td class="p-3 border-b text-center text-xl">{{ number_format($project->final_ucp, 2) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            <div class="bg-orange-600 text-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
+                <h3 class="text-lg font-bold opacity-80 mb-2">الجهد الزمني المتوقع</h3>
+                <div class="text-3xl font-black">{{ number_format($project->estimated_effort, 0) }} ساعة عمل</div>
+                <p class="text-xs mt-2 italic">* محسوب بناءً على إنتاجية 20 ساعة/نقطة.</p>
             </div>
-            <div class="p-4 border-2 border-purple-200 rounded-lg bg-purple-50">
-                <div class="text-sm text-purple-700 font-bold">نقاط حالات الاستخدام (UCP)</div>
-                <div class="text-2xl font-black">{{ number_format($project->final_ucp, 2) }}</div>
-            </div>
-            <div class="p-4 border-2 border-orange-200 rounded-lg bg-orange-50">
-                <div class="text-sm text-orange-700 font-bold">الجهد المقدر (Effort)</div>
-                <div class="text-2xl font-black">{{ number_format($project->estimated_effort, 0) }} ساعة عمل</div>
-            </div>
-            <div class="p-4 border-2 border-red-200 rounded-lg bg-red-50">
-                <div class="text-sm text-red-700 font-bold">التكلفة الإجمالية التقديرية</div>
-                <div class="text-2xl font-black text-red-600">${{ number_format($project->estimated_cost, 2) }}</div>
+            <div class="bg-emerald-600 text-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
+                <h3 class="text-lg font-bold opacity-80 mb-2">التكلفة المالية التقديرية</h3>
+                <div class="text-3xl font-black">${{ number_format($project->estimated_cost, 2) }}</div>
+                <p class="text-xs mt-2 italic">* بناءً على متوسط سعر ساعة برمجة قياسي.</p>
             </div>
         </div>
 
-        <div class="text-center text-xs text-gray-400 mt-10 italic">
-            جميع الحسابات تمت بناءً على معايير FP و UCP المعتمدة برمجياً.
+        <div class="mt-12 text-center border-t pt-6 text-gray-400 text-sm">
+            <p>جميع المعادلات المستخدمة تتوافق مع معايير هندسة البرمجيات الحديثة.</p>
+            <p class="mt-1 font-bold">تم التوليد بواسطة المحلل الذكي لتقدير المشاريع</p>
         </div>
     </div>
+
 </body>
 </html>
