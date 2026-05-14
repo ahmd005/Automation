@@ -4,6 +4,7 @@ use App\Http\Controllers\AiAgentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NodeController;
+use App\Http\Controllers\SoftwareAnalystController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -18,3 +19,10 @@ Route::get('node-types', [NodeController::class, 'getNodeTypes']);
 Route::post('/ai/chat', [AiAgentController::class, 'handleChat']);
 
 Route::get('/check-models', [AiAgentController::class, 'listModels']);
+
+
+
+////////////////////////////
+
+// تأكد أن اسم الدالة هو chat
+Route::post('/chat', [SoftwareAnalystController::class, 'chat']);
