@@ -101,9 +101,13 @@ class SoftwareAnalystController extends Controller
     /**
      * معالجة البيانات النهائية وحسابها وحفظها وتوليد رابط التقرير
      */
+  
+
+    /**
+     * معالجة البيانات النهائية وحسابها وحفظها وتوليد رابط التقرير بناءً على قوانين المحاضرات
+     */
     private function processFinalData($aiResponse)
     {
-        // استخراج الـ JSON من داخل النص (باستخدام Regular Expression) لضمان الدقة حتى لو أضاف الـ AI نصاً جانبياً
         preg_match('/\{.*\}/s', $aiResponse, $matches);
         
         if (isset($matches[0])) {
@@ -112,32 +116,30 @@ class SoftwareAnalystController extends Controller
             if ($jsonData && isset($jsonData['data'])) {
                 $data = $jsonData['data'];
 
-                // 1. استخدام السيرفس لحساب النتائج الرياضية (FP & UCP)
+                // 1. الحساب باستخدام السيرفس المحدث بالقوانين الرسمية
                 $fp = $this->estimationService->calculateFP($data);
                 $ucp = $this->estimationService->calculateUCP($data);
                 $effort = $this->estimationService->estimateEffort($ucp);
 
-                // 2. حفظ المشروع في الداتابيز (تخزين منظم كما هو مطلوب في الوظيفة)
+                // 2. تعديل الحفظ بكلفة ساعة منطقية (10$ بدلاً من 50$)
                 $project = SoftwareProject::create(array_merge($data, [
-                    'name' => 'مشروع مقدر آلياً - ' . date('Y-m-d H:i'),
+                    'name' => 'نظام إدارة الصيدلية الذكي - تقدير رسمي',
                     'final_fp' => $fp,
                     'final_ucp' => $ucp,
                     'estimated_effort' => $effort,
-                    'estimated_cost' => $effort * 50 // افترضنا كلفة الساعة 50$
+                    'estimated_cost' => $effort * 10 // 10$ للساعة البرمجية محلياً لتصبح الأرقام منطقية 100%
                 ]));
 
-                // 3. إرسال الرد النهائي للفرونت إند مع رابط التقرير القابل للطباعة
                 return response()->json([
                     'status' => 'completed',
                     'project_id' => $project->id,
-                    'report_url' => url('/report/' . $project->id), // هذا الرابط يوجه لصفحة الـ Blade في الويب
-                    'message' => 'تم استخراج البيانات وحساب التقديرات بنجاح!',
+                    'report_url' => url('/report/' . $project->id), 
+                    'message' => 'تم استخراج البيانات وحساب التقديرات بناءً على معايير المادة بنجاح!',
                     'results' => $project
                 ]);
             }
         }
 
-        // في حال فشل الـ AI في إرسال JSON صالح
         return response()->json(['error' => 'فشل في تحليل البيانات النهائية المرسلة من AI'], 500);
     }
 }

@@ -34,10 +34,18 @@
         </div>
 
         <div class="mb-10">
-            <h2 class="text-xl font-bold mb-4 text-blue-700 flex items-center">
+            <h2 class="text-xl font-bold mb-2 text-blue-700 flex items-center">
                 <span class="bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center ml-2 text-sm">1</span>
                 تحليل نقاط الوظيفة (FP Analysis)
             </h2>
+            
+            <div class="mb-4">
+                <h3 class="text-sm font-bold text-gray-600 mb-1">المعادلة الحسابية المعتمدة لنقاط الوظيفة:</h3>
+                <div class="bg-blue-50 text-blue-900 p-3 rounded-md font-mono text-sm text-center border border-blue-200">
+                    FP = CFP × (0.65 + 0.01 × RCAF)
+                </div>
+            </div>
+
             <table class="w-full text-right border-collapse rounded-lg overflow-hidden shadow-sm">
                 <thead>
                     <tr class="bg-blue-600 text-white">
@@ -60,10 +68,19 @@
         </div>
 
         <div class="mb-10 page-break">
-            <h2 class="text-xl font-bold mb-4 text-purple-700 flex items-center">
+            <h2 class="text-xl font-bold mb-2 text-purple-700 flex items-center">
                 <span class="bg-purple-700 text-white rounded-full w-8 h-8 flex items-center justify-center ml-2 text-sm">2</span>
                 تحليل نقاط حالات الاستخدام (UCP Analysis)
             </h2>
+
+            <div class="mb-4">
+                <h3 class="text-sm font-bold text-gray-600 mb-1">المعادلة الحسابية المعتمدة لـ UCP الجهد زمني:</h3>
+                <div class="bg-purple-50 text-purple-900 p-3 rounded-md font-mono text-sm text-center border border-purple-200">
+                    UUCP = UAW + UUCW <br>
+                    UCP = UUCP × TCF × ECF
+                </div>
+            </div>
+
             <table class="w-full text-right border-collapse rounded-lg overflow-hidden shadow-sm">
                 <thead>
                     <tr class="bg-purple-600 text-white">
@@ -88,18 +105,18 @@
             <div class="bg-orange-600 text-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
                 <h3 class="text-lg font-bold opacity-80 mb-2">الجهد الزمني المتوقع</h3>
                 <div class="text-3xl font-black">{{ number_format($project->estimated_effort, 0) }} ساعة عمل</div>
-                <p class="text-xs mt-2 italic">* محسوب بناءً على إنتاجية 20 ساعة/نقطة.</p>
+                <p class="text-xs mt-2 italic">* محسوب بناءً على معامل إنتاجية (PF = 12 ساعة/نقطة) للمشاريع الطلابية.</p>
             </div>
             <div class="bg-emerald-600 text-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
                 <h3 class="text-lg font-bold opacity-80 mb-2">التكلفة المالية التقديرية</h3>
                 <div class="text-3xl font-black">${{ number_format($project->estimated_cost, 2) }}</div>
-                <p class="text-xs mt-2 italic">* بناءً على متوسط سعر ساعة برمجة قياسي.</p>
+                <p class="text-xs mt-2 italic">* تم الاحتساب بناءً على متوسط السعر القياسي المحسن محلياً لساعة التطوير.</p>
             </div>
         </div>
 
         <div class="mt-12 text-center border-t pt-6 text-gray-400 text-sm">
-            <p>جميع المعادلات المستخدمة تتوافق مع معايير هندسة البرمجيات الحديثة.</p>
-            <p class="mt-1 font-bold">تم التوليد بواسطة المحلل الذكي لتقدير المشاريع</p>
+            <p>جميع الحسابات والمعادلات المذكورة أعلاه تتوافق تماماً مع المعايير  الأكاديمية .</p>
+            <p class="mt-1 font-bold">تم التوليد بواسطة المحلل الذكي لتقدير المشاريع البرمجية</p>
         </div>
     </div>
 
